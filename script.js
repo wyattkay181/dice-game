@@ -10,28 +10,31 @@ const tieCount = document.getElementById('tie-count');
 const rollSound = document.getElementById('roll-sound');
 const winSound = document.getElementById('win-sound');
 const loseSound = document.getElementById('lose-sound');
+const tieSound = document.getElementById('tie-sound');
 
 let wins = 0, losses = 0, ties = 0;
+let isMuted = false;
+const muteBtn = document.getElementById('mute-btn');
 
-// 3D Dice Cube face transforms for each number
+// 3D Dice Cube face transforms for each number (matching CodePen style)
 const diceTransforms = [
-  'rotateX(-20deg) rotateY(20deg)', // placeholder for 0
-  'rotateX(0deg) rotateY(0deg)',    // 1: front
-  'rotateX(0deg) rotateY(180deg)',  // 2: back
-  'rotateX(0deg) rotateY(-90deg)',  // 3: left
-  'rotateX(0deg) rotateY(90deg)',   // 4: right
-  'rotateX(-90deg) rotateY(0deg)',  // 5: top
-  'rotateX(90deg) rotateY(0deg)'    // 6: bottom
+  '', // placeholder for 0
+  'rotateX(0deg) rotateY(0deg)',      // 1: front
+  'rotateX(-90deg) rotateY(0deg)',    // 2: top
+  'rotateX(0deg) rotateY(-90deg)',    // 3: right
+  'rotateX(0deg) rotateY(90deg)',     // 4: left
+  'rotateX(90deg) rotateY(0deg)',     // 5: bottom
+  'rotateX(0deg) rotateY(180deg)'     // 6: back
 ];
 
 function setDiceFace(diceElem, value) {
   diceElem.style.transform = diceTransforms[value];
 }
 
-function animateDiceRoll3D(diceElem, finalValue, callback) {
+function animateDiceRoll3D(diceElem, finalValue) {
   diceElem.classList.add('rolling');
-  // Randomize during roll
-  let frames = 10;
+  // Animate with random faces during roll
+  let frames = 18;
   let i = 0;
   const rollInterval = setInterval(() => {
     const rand = Math.floor(Math.random() * 6) + 1;
@@ -42,10 +45,9 @@ function animateDiceRoll3D(diceElem, finalValue, callback) {
       setTimeout(() => {
         setDiceFace(diceElem, finalValue);
         diceElem.classList.remove('rolling');
-        if (callback) callback();
       }, 200);
     }
-  }, 50);
+  }, 35);
 }
 
 function rollDice() {
@@ -53,9 +55,11 @@ function rollDice() {
 }
 
 function playSound(type) {
+  if (isMuted) return;
   if (type === 'roll') rollSound.play();
   if (type === 'win') winSound.play();
   if (type === 'lose') loseSound.play();
+  if (type === 'tie') tieSound.play();
 }
 
 function showMessage(result) {
@@ -82,24 +86,25 @@ rollBtn.addEventListener('click', () => {
   playSound('roll');
   const playerRoll = rollDice();
   const computerRoll = rollDice();
-  animateDiceRoll3D(playerDice, playerRoll, () => {
-    animateDiceRoll3D(computerDice, computerRoll, () => {
-      if (playerRoll > computerRoll) {
-        wins++;
-        showMessage('win');
-        playSound('win');
-      } else if (playerRoll < computerRoll) {
-        losses++;
-        showMessage('lose');
-        playSound('lose');
-      } else {
-        ties++;
-        showMessage('tie');
-      }
-      updateCounters();
-      rollBtn.disabled = false;
-    });
-  });
+  animateDiceRoll3D(playerDice, playerRoll);
+  animateDiceRoll3D(computerDice, computerRoll);
+  setTimeout(() => {
+    if (playerRoll > computerRoll) {
+      wins++;
+      showMessage('win');
+      playSound('win');
+    } else if (playerRoll < computerRoll) {
+      losses++;
+      showMessage('lose');
+      playSound('lose');
+    } else {
+      ties++;
+      showMessage('tie');
+      playSound('tie');
+    }
+    updateCounters();
+    rollBtn.disabled = false;
+  }, 900); // Wait for both dice to finish
 });
 
 resetBtn.addEventListener('click', () => {
@@ -110,6 +115,11 @@ resetBtn.addEventListener('click', () => {
   setDiceFace(playerDice, 1);
   setDiceFace(computerDice, 1);
   message.textContent = '';
+});
+
+muteBtn.addEventListener('click', () => {
+  isMuted = !isMuted;
+  muteBtn.textContent = isMuted ? '🔇' : '🔊';
 });
 
 // Initial state
