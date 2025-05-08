@@ -18,85 +18,87 @@
       <div>Losses: <span id="loss-count">0</span></div>
       <div>Ties: <span id="tie-count">0</span></div>
     </div>
-    <div class="dice-area">
-      <div class="player-area">
-        <h2>You</h2>
-        <div id="player-dice" class="dice-cube">
-          <div class="face face1">
-            <div class="dot center"></div>
+    <div class="table-container">
+      <div class="dice-area">
+        <div class="player-area">
+          <h2>You</h2>
+          <div id="player-dice" class="dice-cube">
+            <div class="face face1">
+              <div class="dot center"></div>
+            </div>
+            <div class="face face2">
+              <div class="dot top-left"></div>
+              <div class="dot bottom-right"></div>
+            </div>
+            <div class="face face3">
+              <div class="dot top-left"></div>
+              <div class="dot center"></div>
+              <div class="dot bottom-right"></div>
+            </div>
+            <div class="face face4">
+              <div class="dot top-left"></div>
+              <div class="dot top-right"></div>
+              <div class="dot bottom-left"></div>
+              <div class="dot bottom-right"></div>
+            </div>
+            <div class="face face5">
+              <div class="dot top-left"></div>
+              <div class="dot top-right"></div>
+              <div class="dot center"></div>
+              <div class="dot bottom-left"></div>
+              <div class="dot bottom-right"></div>
+            </div>
+            <div class="face face6">
+              <div class="dot top-left"></div>
+              <div class="dot top-right"></div>
+              <div class="dot mid-left"></div>
+              <div class="dot mid-right"></div>
+              <div class="dot bottom-left"></div>
+              <div class="dot bottom-right"></div>
+            </div>
           </div>
-          <div class="face face2">
-            <div class="dot top-left"></div>
-            <div class="dot bottom-right"></div>
-          </div>
-          <div class="face face3">
-            <div class="dot top-left"></div>
-            <div class="dot center"></div>
-            <div class="dot bottom-right"></div>
-          </div>
-          <div class="face face4">
-            <div class="dot top-left"></div>
-            <div class="dot top-right"></div>
-            <div class="dot bottom-left"></div>
-            <div class="dot bottom-right"></div>
-          </div>
-          <div class="face face5">
-            <div class="dot top-left"></div>
-            <div class="dot top-right"></div>
-            <div class="dot center"></div>
-            <div class="dot bottom-left"></div>
-            <div class="dot bottom-right"></div>
-          </div>
-          <div class="face face6">
-            <div class="dot top-left"></div>
-            <div class="dot top-right"></div>
-            <div class="dot mid-left"></div>
-            <div class="dot mid-right"></div>
-            <div class="dot bottom-left"></div>
-            <div class="dot bottom-right"></div>
+        </div>
+        <div class="computer-area">
+          <h2>Computer</h2>
+          <div id="computer-dice" class="dice-cube">
+            <div class="face face1">
+              <div class="dot center"></div>
+            </div>
+            <div class="face face2">
+              <div class="dot top-left"></div>
+              <div class="dot bottom-right"></div>
+            </div>
+            <div class="face face3">
+              <div class="dot top-left"></div>
+              <div class="dot center"></div>
+              <div class="dot bottom-right"></div>
+            </div>
+            <div class="face face4">
+              <div class="dot top-left"></div>
+              <div class="dot top-right"></div>
+              <div class="dot bottom-left"></div>
+              <div class="dot bottom-right"></div>
+            </div>
+            <div class="face face5">
+              <div class="dot top-left"></div>
+              <div class="dot top-right"></div>
+              <div class="dot center"></div>
+              <div class="dot bottom-left"></div>
+              <div class="dot bottom-right"></div>
+            </div>
+            <div class="face face6">
+              <div class="dot top-left"></div>
+              <div class="dot top-right"></div>
+              <div class="dot mid-left"></div>
+              <div class="dot mid-right"></div>
+              <div class="dot bottom-left"></div>
+              <div class="dot bottom-right"></div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="computer-area">
-        <h2>Computer</h2>
-        <div id="computer-dice" class="dice-cube">
-          <div class="face face1">
-            <div class="dot center"></div>
-          </div>
-          <div class="face face2">
-            <div class="dot top-left"></div>
-            <div class="dot bottom-right"></div>
-          </div>
-          <div class="face face3">
-            <div class="dot top-left"></div>
-            <div class="dot center"></div>
-            <div class="dot bottom-right"></div>
-          </div>
-          <div class="face face4">
-            <div class="dot top-left"></div>
-            <div class="dot top-right"></div>
-            <div class="dot bottom-left"></div>
-            <div class="dot bottom-right"></div>
-          </div>
-          <div class="face face5">
-            <div class="dot top-left"></div>
-            <div class="dot top-right"></div>
-            <div class="dot center"></div>
-            <div class="dot bottom-left"></div>
-            <div class="dot bottom-right"></div>
-          </div>
-          <div class="face face6">
-            <div class="dot top-left"></div>
-            <div class="dot top-right"></div>
-            <div class="dot mid-left"></div>
-            <div class="dot mid-right"></div>
-            <div class="dot bottom-left"></div>
-            <div class="dot bottom-right"></div>
-          </div>
-        </div>
-      </div>
+      <button id="roll-btn" aria-label="Roll the dice">Roll Dice</button>
     </div>
-    <button id="roll-btn" aria-label="Roll the dice">Roll Dice</button>
     <div id="message" class="message"></div>
   </div>
   <audio id="roll-sound" src="roll.mp3" preload="auto"></audio>
