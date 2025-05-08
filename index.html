@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dice Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Dice Game</h1>
+    <div class="scoreboard">
+      <div>Wins: <span id="win-count">0</span></div>
+      <div>Losses: <span id="loss-count">0</span></div>
+      <div>Ties: <span id="tie-count">0</span></div>
+      <button id="reset-btn">Reset</button>
+    </div>
+    <div class="dice-area">
+      <div class="player-area">
+        <h2>You</h2>
+        <div id="player-dice" class="dice">🎲</div>
+      </div>
+      <div class="computer-area">
+        <h2>Computer</h2>
+        <div id="computer-dice" class="dice">🎲</div>
+      </div>
+    </div>
+    <button id="roll-btn">Roll Dice</button>
+    <div id="message" class="message"></div>
+  </div>
+  <audio id="roll-sound" src="roll.mp3" preload="auto"></audio>
+  <audio id="win-sound" src="win.mp3" preload="auto"></audio>
+  <audio id="lose-sound" src="lose.mp3" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html> 
