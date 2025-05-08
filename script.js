@@ -1,22 +1,23 @@
+// --- DOM Elements ---
 const playerDice = document.getElementById('player-dice');
 const computerDice = document.getElementById('computer-dice');
 const rollBtn = document.getElementById('roll-btn');
 const resetBtn = document.getElementById('reset-btn');
+const muteBtn = document.getElementById('mute-btn');
 const message = document.getElementById('message');
 const winCount = document.getElementById('win-count');
 const lossCount = document.getElementById('loss-count');
 const tieCount = document.getElementById('tie-count');
-
 const rollSound = document.getElementById('roll-sound');
 const winSound = document.getElementById('win-sound');
 const loseSound = document.getElementById('lose-sound');
 const tieSound = document.getElementById('tie-sound');
 
+// --- State ---
 let wins = 0, losses = 0, ties = 0;
 let isMuted = false;
-const muteBtn = document.getElementById('mute-btn');
 
-// 3D Dice Cube face transforms for each number (matching CodePen style)
+// --- Dice 3D Transforms (CodePen style) ---
 const diceTransforms = [
   '', // placeholder for 0
   'rotateX(0deg) rotateY(0deg)',      // 1: front
@@ -27,27 +28,9 @@ const diceTransforms = [
   'rotateX(0deg) rotateY(180deg)'     // 6: back
 ];
 
+// --- Utility Functions ---
 function setDiceFace(diceElem, value) {
   diceElem.style.transform = diceTransforms[value];
-}
-
-function animateDiceRoll3D(diceElem, finalValue) {
-  diceElem.classList.add('rolling');
-  // Animate with random faces during roll
-  let frames = 18;
-  let i = 0;
-  const rollInterval = setInterval(() => {
-    const rand = Math.floor(Math.random() * 6) + 1;
-    setDiceFace(diceElem, rand);
-    i++;
-    if (i >= frames) {
-      clearInterval(rollInterval);
-      setTimeout(() => {
-        setDiceFace(diceElem, finalValue);
-        diceElem.classList.remove('rolling');
-      }, 200);
-    }
-  }, 35);
 }
 
 function rollDice() {
@@ -81,6 +64,26 @@ function updateCounters() {
   tieCount.textContent = ties;
 }
 
+// --- Dice Animation ---
+function animateDiceRoll3D(diceElem, finalValue) {
+  diceElem.classList.add('rolling');
+  let frames = 18;
+  let i = 0;
+  const rollInterval = setInterval(() => {
+    const rand = Math.floor(Math.random() * 6) + 1;
+    setDiceFace(diceElem, rand);
+    i++;
+    if (i >= frames) {
+      clearInterval(rollInterval);
+      setTimeout(() => {
+        setDiceFace(diceElem, finalValue);
+        diceElem.classList.remove('rolling');
+      }, 200);
+    }
+  }, 35);
+}
+
+// --- Event Handlers ---
 rollBtn.addEventListener('click', () => {
   rollBtn.disabled = true;
   playSound('roll');
@@ -104,7 +107,7 @@ rollBtn.addEventListener('click', () => {
     }
     updateCounters();
     rollBtn.disabled = false;
-  }, 900); // Wait for both dice to finish
+  }, 900);
 });
 
 resetBtn.addEventListener('click', () => {
@@ -122,7 +125,7 @@ muteBtn.addEventListener('click', () => {
   muteBtn.textContent = isMuted ? '🔇' : '🔊';
 });
 
-// Initial state
+// --- Initial State ---
 setDiceFace(playerDice, 1);
 setDiceFace(computerDice, 1);
 updateCounters(); 

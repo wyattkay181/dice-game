@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+  <div class="container" role="main">
     <h1>Dice Game</h1>
     <div class="scoreboard">
       <div>Wins: <span id="win-count">0</span></div>
       <div>Losses: <span id="loss-count">0</span></div>
       <div>Ties: <span id="tie-count">0</span></div>
-      <button id="reset-btn">Reset</button>
-      <button id="mute-btn" aria-label="Mute/Unmute Sound">🔊</button>
+      <button id="reset-btn" aria-label="Reset game">Reset</button>
+      <button id="mute-btn" aria-label="Mute or unmute sound">🔊</button>
     </div>
     <div class="dice-area">
       <div class="player-area">
@@ -94,7 +94,7 @@
         </div>
       </div>
     </div>
-    <button id="roll-btn">Roll Dice</button>
+    <button id="roll-btn" aria-label="Roll the dice">Roll Dice</button>
     <div id="message" class="message"></div>
   </div>
   <audio id="roll-sound" src="roll.mp3" preload="auto"></audio>
