@@ -164,14 +164,13 @@ h1 {
   }
 }
 
-/* Dice Cube: CodePen-inspired style */
+/* Dice Cube: Smoother, more fluid 3D animation */
 .dice-cube {
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   position: relative;
   transform-style: preserve-3d;
-  transform: rotateX(0deg) rotateY(0deg);
-  transition: transform 0.8s cubic-bezier(.36,.07,.19,.97);
+  transition: transform 1s cubic-bezier(.36,.07,.19,.97);
   margin-top: 8px;
   margin-bottom: 32px;
   box-shadow: 0 8px 32px #0008, 0 1.5px 8px #0004;
@@ -180,59 +179,48 @@ h1 {
 }
 .dice-cube .face {
   position: absolute;
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 12px #0002;
-  border: 2px solid #e0e1e6;
+  border: 1px solid #e0e1e6;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
 }
-.dice-cube .face1 { transform: rotateY(0deg) translateZ(45px); }
-.dice-cube .face2 { transform: rotateX(-90deg) translateZ(45px); }
-.dice-cube .face3 { transform: rotateY(-90deg) translateZ(45px); }
-.dice-cube .face4 { transform: rotateY(90deg) translateZ(45px); }
-.dice-cube .face5 { transform: rotateX(90deg) translateZ(45px); }
-.dice-cube .face6 { transform: rotateY(180deg) translateZ(45px); }
+.dice-cube .face1 { transform: translateZ(50px); }
+.dice-cube .face2 { transform: rotateY(180deg) translateZ(50px); }
+.dice-cube .face3 { transform: rotateY(-90deg) translateZ(50px); }
+.dice-cube .face4 { transform: rotateY(90deg) translateZ(50px); }
+.dice-cube .face5 { transform: rotateX(90deg) translateZ(50px); }
+.dice-cube .face6 { transform: rotateX(-90deg) translateZ(50px); }
 
-/* Dice dots for each face (styled for vibrancy) */
-.dice-cube .face1::before,
-.dice-cube .face2::before,
-.dice-cube .face3::before,
-.dice-cube .face4::before,
-.dice-cube .face5::before,
-.dice-cube .face6::before { content: none; }
+/* Show face classes for smooth roll */
+.dice-cube.show-1 { transform: rotateX(calc(720deg + var(--spin-x,2)*360deg)) rotateZ(-720deg) rotateY(calc(var(--spin-y,2)*360deg)); }
+.dice-cube.show-2 { transform: rotateX(calc(450deg + var(--spin-x,2)*360deg)) rotateZ(-720deg) rotateY(calc(var(--spin-y,2)*360deg)); }
+.dice-cube.show-3 { transform: rotateY(calc(-450deg + var(--spin-y,2)*360deg)) rotateZ(-1440deg) rotateX(calc(var(--spin-x,2)*360deg)); }
+.dice-cube.show-4 { transform: rotateY(calc(810deg + var(--spin-y,2)*360deg)) rotateZ(720deg) rotateX(calc(var(--spin-x,2)*360deg)); }
+.dice-cube.show-5 { transform: rotateX(calc(-810deg + var(--spin-x,2)*360deg)) rotateZ(-1080deg) rotateY(calc(var(--spin-y,2)*360deg)); }
+.dice-cube.show-6 { transform: rotateX(calc(-900deg + var(--spin-x,2)*360deg)) rotateZ(1080deg) rotateY(calc(var(--spin-y,2)*360deg)); }
 
-.dice-cube.rolling {
-  animation: dice-roll-3d-codepen 0.9s cubic-bezier(.36,.07,.19,.97);
-}
-@keyframes dice-roll-3d-codepen {
-  0% { transform: rotateX(0deg) rotateY(0deg); }
-  20% { transform: rotateX(180deg) rotateY(90deg); }
-  40% { transform: rotateX(90deg) rotateY(180deg); }
-  60% { transform: rotateX(270deg) rotateY(270deg); }
-  80% { transform: rotateX(360deg) rotateY(360deg); }
-  100% { /* Final transform will be set by JS */ }
-}
-
+/* Dot styles and positions (reference-inspired) */
 .dot {
   position: absolute;
-  width: 18px;
-  height: 18px;
-  background: #27ae60;
-  border-radius: 50%;
-  box-shadow: 0 1px 4px #0002;
+  width: 20px;
+  height: 20px;
+  margin: -10px 5px 5px -10px;
+  border-radius: 20px;
+  background-color: #f25f5c;
+  box-shadow: inset 2px 2px #d90429;
 }
-.dot.center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
-.dot.top-left { top: 18px; left: 18px; }
-.dot.top-right { top: 18px; right: 18px; }
-.dot.bottom-left { bottom: 18px; left: 18px; }
-.dot.bottom-right { bottom: 18px; right: 18px; }
-.dot.mid-left { top: 50%; left: 18px; transform: translateY(-50%); }
-.dot.mid-right { top: 50%; right: 18px; transform: translateY(-50%); }
+.dot.center { top: 50%; left: 50%; }
+.dot.top-left { top: 20%; left: 20%; }
+.dot.top-right { top: 20%; left: 80%; }
+.dot.bottom-left { top: 80%; left: 20%; }
+.dot.bottom-right { top: 80%; left: 80%; }
+.dot.mid-left { top: 50%; left: 20%; }
+.dot.mid-right { top: 50%; left: 80%; }
 
 button:focus, #roll-btn:focus, #reset-btn:focus, #mute-btn:focus {
   outline: 2px solid #4e8cff;
@@ -256,11 +244,11 @@ button:focus, #roll-btn:focus, #reset-btn:focus, #mute-btn:focus {
   .dice-cube .face {
     width: 64px;
     height: 64px;
-    font-size: 1.5rem;
   }
   .dot {
     width: 12px;
     height: 12px;
+    margin: -6px 3px 3px -6px;
   }
   #roll-btn {
     font-size: 1rem;

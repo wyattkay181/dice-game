@@ -29,8 +29,20 @@ const diceTransforms = [
 ];
 
 // --- Utility Functions ---
-function setDiceFace(diceElem, value) {
-  diceElem.style.transform = diceTransforms[value];
+function setDiceFace(diceElem, value, spins = 0) {
+  for (let i = 1; i <= 6; i++) diceElem.classList.remove(`show-${i}`);
+  // Add a custom property for extra spins to make the roll dynamic
+  diceElem.style.setProperty('--spin-x', spins.x);
+  diceElem.style.setProperty('--spin-y', spins.y);
+  diceElem.classList.add(`show-${value}`);
+}
+
+function getRandomSpins() {
+  // Randomize number of full spins for X and Y axes
+  return {
+    x: 2 + Math.floor(Math.random() * 3), // 2-4 full spins
+    y: 2 + Math.floor(Math.random() * 3)
+  };
 }
 
 function rollDice() {
@@ -65,22 +77,12 @@ function updateCounters() {
 }
 
 // --- Dice Animation ---
-function animateDiceRoll3D(diceElem, finalValue) {
-  diceElem.classList.add('rolling');
-  let frames = 18;
-  let i = 0;
-  const rollInterval = setInterval(() => {
-    const rand = Math.floor(Math.random() * 6) + 1;
-    setDiceFace(diceElem, rand);
-    i++;
-    if (i >= frames) {
-      clearInterval(rollInterval);
-      setTimeout(() => {
-        setDiceFace(diceElem, finalValue);
-        diceElem.classList.remove('rolling');
-      }, 200);
-    }
-  }, 35);
+function animateDiceRoll3D(diceElem, finalValue, onComplete) {
+  const spins = getRandomSpins();
+  setDiceFace(diceElem, finalValue, spins);
+  setTimeout(() => {
+    if (onComplete) onComplete();
+  }, 1000); // match CSS transition duration
 }
 
 // --- Event Handlers ---
@@ -89,25 +91,31 @@ rollBtn.addEventListener('click', () => {
   playSound('roll');
   const playerRoll = rollDice();
   const computerRoll = rollDice();
-  animateDiceRoll3D(playerDice, playerRoll);
-  animateDiceRoll3D(computerDice, computerRoll);
-  setTimeout(() => {
-    if (playerRoll > computerRoll) {
-      wins++;
-      showMessage('win');
-      playSound('win');
-    } else if (playerRoll < computerRoll) {
-      losses++;
-      showMessage('lose');
-      playSound('lose');
-    } else {
-      ties++;
-      showMessage('tie');
-      playSound('tie');
+  let finished = 0;
+  function checkDone() {
+    finished++;
+    if (finished === 2) {
+      setTimeout(() => {
+        if (playerRoll > computerRoll) {
+          wins++;
+          showMessage('win');
+          playSound('win');
+        } else if (playerRoll < computerRoll) {
+          losses++;
+          showMessage('lose');
+          playSound('lose');
+        } else {
+          ties++;
+          showMessage('tie');
+          playSound('tie');
+        }
+        updateCounters();
+        rollBtn.disabled = false;
+      }, 200);
     }
-    updateCounters();
-    rollBtn.disabled = false;
-  }, 900);
+  }
+  animateDiceRoll3D(playerDice, playerRoll, checkDone);
+  animateDiceRoll3D(computerDice, computerRoll, checkDone);
 });
 
 resetBtn.addEventListener('click', () => {
