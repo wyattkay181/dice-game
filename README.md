@@ -50,4 +50,4 @@ A simple, modern dice-rolling game where you compete against the computer. Inspi
 - `README.md` — Project info and instructions
 
 ---
-Enjoy rolling the dice! 🎲 
+Enjoy rolling the dice! 🎲
